@@ -157,7 +157,7 @@ end
 # @param [String] unshaped_word
 def replace_lam_alef(unshaped_word)
   letter_before =''
-  list_word = unshaped_word.chars
+  list_word = unshaped_word.chars.to_a
   unshaped_word.chars.each_with_index do |c, i|
     letter_before = c if !is_haraka(c) && c != DEFINED_CHARACTERS_ORGINAL_LAM
 
@@ -257,7 +257,7 @@ def reshape_it(unshaped_word)
   return get_reshaped_glyph(unshaped_word[0], 1) if unshaped_word.length == 1
 
   reshaped_word = []
-  unshaped_word.chars.each_index do |i|
+  unshaped_word.chars.to_a.each_index do |i|
     before = false
     after= false
 
@@ -280,7 +280,7 @@ def reshape_it(unshaped_word)
       reshaped_word.push(get_reshaped_glyph(unshaped_word[i], 4))
 
     elsif !after && !before
-      reshaped_word.push(get_reshaped_glyph(unshaped_word[i], 1))
+      reshaped_word.push(get_reshaped_glyph(unshaped_word[i], 0))
 
     end
   end
@@ -345,7 +345,7 @@ end
 # @param [String] sentence
 def reshape_sentence(sentence)
   words = get_words(sentence)
-  words.each_with_index do |word, i|
+  words.to_a.each_with_index do |word, i|
     if has_arabic_letters word
 
       if is_arabic_word word
@@ -366,7 +366,7 @@ end
 # @param [String] text
 def reshape(text)
 
-  lines = text.lines
+  lines = text.lines.to_a
   lines.each_with_index do |line, i|
     lines[i]=reshape_sentence(line)
   end
